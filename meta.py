@@ -8,6 +8,8 @@
     I chose this implementation to get the minimum changes to the original code,
     whith the insparation of the "ClsProtector" and the deco-classes from my class.
 """
+from typing import Type
+from typing import Callable
 import re  # used to find the classes in the source file
 import os  # used to get the current directory
 
@@ -15,50 +17,58 @@ DEFAULT_FILE_NAME = "fruit.py"
 DEFAULT_CODE_TO_ADD = r'print("Hello World")'
 
 
-def func_decorator(function, code_to_add_input: str) -> str:
+def func_decorator(original_function: Callable, custom_code: str) -> Callable:
     """
-    A function to add code to a method.
-    :param function: the method to add code to.
-    :param code_to_add_input: the code to add to the method.
-    :return: the method with the code added to it.
+    A decorator function that enhances the behavior of an existing method.
+
+    :param original_function: The method to which custom code will be added.
+    :param custom_code: The custom code to append to the original method.
+
+    :return: A new callable function that combines the original method and the custom code.
     """
 
-    def ret(*args, **kwargs):
+    def decorated_function_with_custom_code(*args, **kwargs):
         # Execute the original method first
-        result = function(*args, **kwargs)
+        result = original_function(*args, **kwargs)
 
-        # Prepare the local context for the exec function
+        # Prepare the local context for executing the custom code
         local_context = {"self": args[0]} if args else {}
         local_context.update(kwargs)
 
-        # Execute the provided code snippet in the local context
-        exec(code_to_add_input, globals(), local_context)
+        # Execute the provided custom code within the local context
+        exec(custom_code, globals(), local_context)
 
-        return result if function.__name__ != "__str__" else str(result)
+        return result if original_function.__name__ != "__str__" else str(result)
 
-    return ret
+    return decorated_function_with_custom_code
 
 
 class ClassDecorator(type):
     """
-    A meta class to add code to all the methods of a class.
-    code_to_add is the code to add to the methods
-    it uses the func_decorator function to add the code to the methods
+    A metaclass to add code to all the methods of a class.
+    code_to_add is the code to add to the methods.
+    It uses the func_decorator function to add the code to the methods.
     """
 
-    def __new__(cls, name, bases, dict, code_to_add):
-        newcls = type.__new__(cls, name, bases, dict)
+    def __new__(
+        mcs: Type["ClassDecorator"],
+        name: str,
+        bases: tuple,
+        dict: dict,
+        code_to_add: str,
+    ):
+        newcls = type.__new__(mcs, name, bases, dict)
         for attr, item in newcls.__dict__.items():
             if callable(item):  # true if item is method
                 setattr(newcls, attr, func_decorator(item, code_to_add))
         return newcls
 
 
-def add_class_decorations(filename: str):
+def add_class_decorations(filename: str) -> None:
     """
     A function to find the classes in a source file with reg expressions
     :param filename: the name of the source file
-    :return: a list of tuples containing the class name and the line number
+    :return: None (the function changes the source file)
     """
     with open(filename, "r", encoding="utf-8") as file:
         source = file.read()
@@ -88,7 +98,10 @@ def add_class_decorations(filename: str):
                 source = file.read()
 
 
-def import_meta_class(file_name_string="fruit.py", code_to_add="print('Hello World')"):
+def import_meta_class(
+    file_name_string: str = "fruit.py",
+    code_to_add: str = "print('Hello World')"
+) -> None:
     """
     A function to import the meta class to the source file
     it also calls the add_class_decorations function
@@ -97,7 +110,7 @@ def import_meta_class(file_name_string="fruit.py", code_to_add="print('Hello Wor
     with open(file_name_string, "r+", encoding="utf-8") as file:
         existing_content = file.read()
         if "add_class_decorations" in existing_content:
-            return None  # the file is already imported
+            return  # the file is already imported
         cur_file_name_no_extnsion = os.path.splitext(
             os.path.basename(__file__))[0]
         file.seek(0, 0)
