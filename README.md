@@ -38,6 +38,7 @@ This Python script dynamically injects decorators into class methods of a given 
 ## Usage 📖
 
 ![Alt text](images/UI_demo.png?raw=true "Program main menu")
+
 The script prompts the user to input the name of a Python file and a snippet of Python code. It then modifies the specified file by adding a metaclass to each class, which in turn applies the provided code snippet as a decorator to all methods of these classes.
 
 ### Steps 🚶‍♂️
@@ -52,20 +53,19 @@ The script prompts the user to input the name of a Python file and a snippet of 
 
 Two examples are included in the repository: [fruit.py](fruit.py) and [bank.py](bank.py). The user can input the name of either file to see the script in action.
 
-<div style="display: flex; justify-content: center;">
-    <div style="margin-right: 20px;">
-        <img src="./images/fruit_demo.png" width="500">
-    </div>
-    <div>
-        <img src="./images/bank_demo.png" width="500">
-    </div>
-</div>
+
 
 ### Output 📝
 
 <table>
 <tr>
-    <th colspan="2"><a href="./fruit.py">🍎 fruit.py</a> output befor and after MetaDecorator: <code>print(self.apple_color)</code></th>
+    <th colspan="2">
+        <div style="margin-right: 20px;">
+            <img src="./images/fruit_demo.png" width="500">
+        </div>
+        <a href="./fruit.py">🍎 fruit.py</a> output befor and after MetaDecorator: <code>print(self.apple_color)</code>
+</div>
+    </th>
 </tr>
 <tr>
     <td>
@@ -94,7 +94,12 @@ A basket of 50 blue apples.
 </td>
 </tr>
     <tr>
-    <th colspan="2"><a href="./bank.py">🏦 bank.py</a> output befor and after MetaDecorator: <code>print(self.amt)</code></th>
+        <th colspan="2">
+            <div>
+                <img src="./images/bank_demo.png" width="500">
+            </div>
+        <a href="./bank.py">🏦 bank.py</a> output befor and after MetaDecorator: <code>print(self.amt)</code>
+        </th>
     </tr>
 <tr>
 <td>
