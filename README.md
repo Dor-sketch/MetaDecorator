@@ -1,10 +1,27 @@
 # MetaDecorator: Python Dynamic Decorator Injection 🧙‍♂️🔧
 
-## Overview 🌟
-
 This Python script dynamically injects decorators into class methods of a given Python file, showcasing metaprogramming, regular expression parsing, and dynamic code execution.
 
-![cover image](cover.png)
+<div style="text-align: center;">
+    <img src="./images/cover.png" width="500" hight="10"
+    style="border-radius: 10px; border: 1px solid #ddd; padding: 5px;">
+</div>
+
+### Table of Contents 📑
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=2 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Key Features 🛠️](#key-features-️)
+- [Usage 📖](#usage-)
+- [Example Usage 🌟](#example-usage-)
+- [Application 💡](#application-)
+- [Disclaimer ⚠️](#disclaimer-️)
+- [Academic Origins and Acknowledgements 🎓](#academic-origins-and-acknowledgements-)
+- [License 📜](#license-)
+
+<!-- /code_chunk_output -->
 
 ---
 
@@ -14,9 +31,13 @@ This Python script dynamically injects decorators into class methods of a given 
 - **Metaclass Utilization**: Leverages Python's metaclass mechanism to extend class functionalities.
 - **Regular Expression Parsing**: Uses regular expressions to identify and manipulate class definitions within a Python file.
 - **Dynamic Code Execution**: Executes user-provided Python code dynamically within the context of the program.
+- **User-Friendly Interface**: Provides a simple and intuitive interface for the user to interact with the script.
+
+---
 
 ## Usage 📖
 
+![Alt text](images/UI_demo.png?raw=true "Program main menu")
 The script prompts the user to input the name of a Python file and a snippet of Python code. It then modifies the specified file by adding a metaclass to each class, which in turn applies the provided code snippet as a decorator to all methods of these classes.
 
 ### Steps 🚶‍♂️
@@ -25,38 +46,41 @@ The script prompts the user to input the name of a Python file and a snippet of 
 2. Run [the script](meta.py) in a Python environment.
 3. Follow the on-screen prompts to specify the target Python file and the code snippet for injection.
 
+---
+
 ## Example Usage 🌟
 
-2 examples are included in the repository: [fruit.py](fruit.py) and [bank.py](bank.py). The user can input the name of either file to see the script in action.
+Two examples are included in the repository: [fruit.py](fruit.py) and [bank.py](bank.py). The user can input the name of either file to see the script in action.
 
-### AppleBasket Class Example 🍎
+<div style="display: flex; justify-content: center;">
+    <div style="margin-right: 20px;">
+        <img src="./images/fruit_demo.png" width="500">
+    </div>
+    <div>
+        <img src="./images/bank_demo.png" width="500">
+    </div>
+</div>
 
-Before MetaDecorator:
+### Output 📝
 
-```python
-class AppleBasket:
-    def __init__(self, color, quantity):
-        self.apple_color = color
-        self.apple_quantity = quantity
-
-    def __str__(self):
-        return "A basket of {} {} apples.".format(self.apple_quantity, self.apple_color)
-
-example1 = AppleBasket("red", 4)
-example2 = AppleBasket("blue", 50)
-
-print("Example1:", example1, "\nExample2:", example2)
-
-```
-
-output:
+<table>
+<tr>
+    <th colspan="2"><a href="./fruit.py">🍎 fruit.py</a> output befor and after MetaDecorator: <code>print(self.apple_color)</code></th>
+</tr>
+<tr>
+    <td>
 
 ```bash
 Example1: A basket of 4 red apples.
 Example2: A basket of 50 blue apples.
+
+
+
+
 ```
 
-After MetaDecorator (with input "fruit.py" and "print(self.apple_color)"):
+</td>
+<td>
 
 ```bash
 red
@@ -67,36 +91,34 @@ Example2: blue
 A basket of 50 blue apples.
 ```
 
-### BankAccount Class Example 🏦
-
-Before MetaDecorator:
-
-```python
-class BankAccount:
-    def __init__(self, name, amt):
-        self.name = name
-        self.amt = amt
-
-    def __str__(self):
-        return "Your account, {}, has {} dollars.".format(self.name, self.amt)
-
-account = BankAccount("Bob", 100)
-print(account)
-```
-
-output:
+</td>
+</tr>
+    <tr>
+    <th colspan="2"><a href="./bank.py">🏦 bank.py</a> output befor and after MetaDecorator: <code>print(self.amt)</code></th>
+    </tr>
+<tr>
+<td>
 
 ```bash
 Your account, Bob, has 100 dollars.
+
+
 ```
 
-After MetaDecorator (with input "bank.py" and "print(self.amt)"):
+</td>
+<td>
 
 ```bash
 100
 100
 Your account, Bob, has 100 dollars.
 ```
+
+</td>
+</tr>
+</table>
+
+---
 
 ## Application 💡
 

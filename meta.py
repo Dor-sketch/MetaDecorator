@@ -13,6 +13,7 @@ from typing import Callable
 import re  # used to find the classes in the source file
 import os  # used to get the current directory
 
+
 DEFAULT_FILE_NAME = "fruit.py"
 DEFAULT_CODE_TO_ADD = r'print("Hello World")'
 
@@ -91,16 +92,14 @@ def add_class_decorations(filename: str) -> None:
                 later_content = source[location:]
                 file.seek(location)
                 file.write(
-                    "(metaclass=ClassDecorator,code_to_add=code_to_add)" +
-                    later_content
+                    "(metaclass=ClassDecorator,code_to_add=code_to_add)" + later_content
                 )
                 file.truncate()
                 source = file.read()
 
 
 def import_meta_class(
-    file_name_string: str = "fruit.py",
-    code_to_add: str = "print('Hello World')"
+    file_name_string: str = "fruit.py", code_to_add: str = "print('Hello World')"
 ) -> None:
     """
     A function to import the meta class to the source file
@@ -111,8 +110,7 @@ def import_meta_class(
         existing_content = file.read()
         if "add_class_decorations" in existing_content:
             return  # the file is already imported
-        cur_file_name_no_extnsion = os.path.splitext(
-            os.path.basename(__file__))[0]
+        cur_file_name_no_extnsion = os.path.splitext(os.path.basename(__file__))[0]
         file.seek(0, 0)
         file.write(
             "code_to_add = r'"
@@ -151,37 +149,3 @@ def restore_file_content(filename, content):
     """
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
-
-
-if __name__ == "__main__":
-    # make sure the current directory is the same as the source file
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-    main_file_name_string = input(
-        "Enter python file name or press enter for default (fruit.py): "
-    )
-    if not main_file_name_string:
-        main_file_name_string = DEFAULT_FILE_NAME
-    while not os.path.exists(main_file_name_string):
-        print('File does not exist - please try again, or press "q" to quit')
-        main_file_name_string = input("Enter python file name: ")
-        if main_file_name_string == "q":
-            exit()
-
-    original_content = read_file_content(
-        main_file_name_string
-    )  # Backup original content
-
-    code_to_add = input(
-        'Enter a python code or press enter for default (print("Hello World")): '
-    )
-    if not code_to_add:
-        code_to_add = DEFAULT_CODE_TO_ADD
-    # add the meta class to the source file and change classes definition to use it
-    import_meta_class(main_file_name_string, code_to_add)
-
-    with open(main_file_name_string, "r", encoding="utf-8") as f:  # run the source file
-        main_code = f.read()
-        exec(main_code)
-
-    restore_file_content(main_file_name_string, original_content)
