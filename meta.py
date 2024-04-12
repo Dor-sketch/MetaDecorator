@@ -42,6 +42,36 @@ def func_decorator(original_function: Callable, custom_code: str) -> Callable:
         return result if original_function.__name__ != "__str__" else str(result)
 
     return decorated_function_with_custom_code
+def perform_meta_class_modification(
+    file_name_string: str = DEFAULT_FILE_NAME, code_to_add: str = DEFAULT_CODE_TO_ADD
+) -> None:
+    """
+    A function to import the meta class to the source file
+    it also calls the add_class_decorations function
+    to add the class decorator to the source file
+    """
+    with open(file_name_string, "r+", encoding="utf-8") as file:
+        existing_content = file.read()
+        if "add_class_decorations" in existing_content:
+            return
+        cur_file_name_no_extnsion = os.path.splitext(os.path.basename(__file__))[0]
+        file.seek(0, 0)
+        file.write(
+            "import time\n"
+            "def get_time():\n"
+            "    return time.time()\n"
+            "before = get_time()\n"
+            "code_to_add = '"
+            + "print(get_time() - before)"
+            + "'\n"
+            "from "
+            + cur_file_name_no_extnsion
+            + " import add_class_decorations, ClassDecorator\n"
+            + existing_content
+        )
+        file.close()
+
+    add_class_decorations(file_name_string)
 
 
 class ClassDecorator(type):
@@ -149,3 +179,16 @@ def restore_file_content(filename, content):
     """
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
+
+
+
+file = "fruit.py"
+# try the perform_meta_class_modification function
+perform_meta_class_modification(file)
+# try the import_meta_class function
+# import_meta_class(file)
+# # try the add_class_decorations function
+# add_class_decorations(file)
+# # try the read_file_content function
+# print(read_file_content(file))
+exec(open(file).read())
