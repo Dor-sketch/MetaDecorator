@@ -2,7 +2,7 @@
 A module for demonstrating the Meta class
 """
 
-
+from time import sleep
 class AppleBasket:
     """
     A class representing a basket of apples.
@@ -16,6 +16,7 @@ class AppleBasket:
         self.apple_quantity += 1
 
     def __str__(self):
+        sleep(1)
         return "A basket of {} {} apples.".format(self.apple_quantity, self.apple_color)
 
 

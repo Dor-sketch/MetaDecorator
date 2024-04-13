@@ -12,10 +12,14 @@ from typing import Type
 from typing import Callable
 import re  # used to find the classes in the source file
 import os  # used to get the current directory
-
+import time
 
 DEFAULT_FILE_NAME = "fruit.py"
 DEFAULT_CODE_TO_ADD = r'print("Hello World")'
+
+
+def get_time():
+    return time.time()
 
 
 def func_decorator(original_function: Callable, custom_code: str) -> Callable:
@@ -29,11 +33,14 @@ def func_decorator(original_function: Callable, custom_code: str) -> Callable:
     """
 
     def decorated_function_with_custom_code(*args, **kwargs):
+        before = get_time()
+
         # Execute the original method first
         result = original_function(*args, **kwargs)
 
         # Prepare the local context for executing the custom code
-        local_context = {"self": args[0]} if args else {}
+        local_context = {"self": args[0], "before": before, "original_function": original_function, "result": result} if args else {
+            "before": before, "original_function": original_function, "result": result}
         local_context.update(kwargs)
 
         # Execute the provided custom code within the local context
@@ -42,6 +49,8 @@ def func_decorator(original_function: Callable, custom_code: str) -> Callable:
         return result if original_function.__name__ != "__str__" else str(result)
 
     return decorated_function_with_custom_code
+
+
 def perform_meta_class_modification(
     file_name_string: str = DEFAULT_FILE_NAME, code_to_add: str = DEFAULT_CODE_TO_ADD
 ) -> None:
@@ -54,16 +63,13 @@ def perform_meta_class_modification(
         existing_content = file.read()
         if "add_class_decorations" in existing_content:
             return
-        cur_file_name_no_extnsion = os.path.splitext(os.path.basename(__file__))[0]
+        cur_file_name_no_extnsion = os.path.splitext(
+            os.path.basename(__file__))[0]
         file.seek(0, 0)
         file.write(
-            "import time\n"
-            "def get_time():\n"
-            "    return time.time()\n"
-            "before = get_time()\n"
-            "code_to_add = '"
-            + "print(get_time() - before)"
-            + "'\n"
+            "code_to_add = r'''"
+            + "print(f'--->{original_function.__name__} took {round(get_time() - before, 3)} seconds')"
+            + "'''\n"
             "from "
             + cur_file_name_no_extnsion
             + " import add_class_decorations, ClassDecorator\n"
@@ -122,7 +128,8 @@ def add_class_decorations(filename: str) -> None:
                 later_content = source[location:]
                 file.seek(location)
                 file.write(
-                    "(metaclass=ClassDecorator,code_to_add=code_to_add)" + later_content
+                    "(metaclass=ClassDecorator,code_to_add=code_to_add)" +
+                    later_content
                 )
                 file.truncate()
                 source = file.read()
@@ -140,12 +147,13 @@ def import_meta_class(
         existing_content = file.read()
         if "add_class_decorations" in existing_content:
             return  # the file is already imported
-        cur_file_name_no_extnsion = os.path.splitext(os.path.basename(__file__))[0]
+        cur_file_name_no_extnsion = os.path.splitext(
+            os.path.basename(__file__))[0]
         file.seek(0, 0)
         file.write(
-            "code_to_add = r'"
+            "code_to_add = r'''"
             + code_to_add
-            + "'\n"
+            + "'''\n"
             + "from "
             + cur_file_name_no_extnsion
             + " import add_class_decorations, ClassDecorator\n"
@@ -179,16 +187,3 @@ def restore_file_content(filename, content):
     """
     with open(filename, "w", encoding="utf-8") as file:
         file.write(content)
-
-
-
-file = "fruit.py"
-# try the perform_meta_class_modification function
-perform_meta_class_modification(file)
-# try the import_meta_class function
-# import_meta_class(file)
-# # try the add_class_decorations function
-# add_class_decorations(file)
-# # try the read_file_content function
-# print(read_file_content(file))
-exec(open(file).read())

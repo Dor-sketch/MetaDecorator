@@ -1,58 +1,72 @@
 # MetaDecorator: Python Dynamic Decorator Injection 🧙‍♂️🔧
 
-This Python script dynamically injects decorators into class methods of a given Python file, showcasing metaprogramming, regular expression parsing, and dynamic code execution.
+This Python script dynamically injects decorators into class methods of a given Python file, showcasing metaprogramming, regular expression parsing, and dynamic code execution. The initial version of this script was developed as part of a university course assignment for _Defensive System-Programming (20937)_ at the Open University of Israel. The initial version of this script received a perfect score of `100` from the course. Since then, the code has been extensively modified and improved to enhance its functionality and applicability.
 
-<div style="text-align: center;">
-    <img src="./images/cover.png" width="500" hight="10"
+<p align="center">
+    <img src="./images/mat.png" width="500"
     style="border-radius: 10px; border: 1px solid #ddd; padding: 5px;">
-</div>
+</p>
 
-### Table of Contents 📑
+---
+
+### Table of Contents
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=2 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
-- [Key Features 🛠️](#key-features-️)
-- [Usage 📖](#usage-)
-- [Example Usage 🌟](#example-usage-)
-- [Application 💡](#application-)
-- [Disclaimer ⚠️](#disclaimer-️)
-- [Academic Origins and Acknowledgements 🎓](#academic-origins-and-acknowledgements-)
-- [License 📜](#license-)
+- [Disclaimer](#disclaimer)
+- [Background](#background)
+- [Key Features](#key-features)
+- [Usage](#usage)
+- [Example Applications](#example-applications)
 
 <!-- /code_chunk_output -->
 
 ---
 
-## Key Features 🛠️
+## Disclaimer
+
+This script modifies source files and executes code dynamically. It should be used with caution and only with files in a safe and controlled environment. The script is provided as-is, and the author takes no responsibility for any damage or loss caused by its usage. Always back up your files before running the script. See the [License](LICENSE) section for more information.
+
+## Background
+
+Metaprogramming is a powerful technique in Python that allows you to modify the behavior of classes and functions at runtime. One common use case of metaprogramming is to inject decorators into class methods dynamically. Decorators are a powerful feature in Python that allows you to add functionality to functions or methods without altering their original code. By injecting decorators into class methods dynamically, you can add cross-cutting concerns such as logging, caching, security checks, or performance profiling to your classes without cluttering the original codebase.
+
+This script leverages Python's metaclass mechanism to extend class functionalities by adding a metaclass to each class in a given Python file. The metaclass then applies a user-provided code snippet as a decorator to all methods of these classes. The script uses regular expressions to identify and manipulate class definitions within a Python file and dynamically executes user-provided Python code within the context of the program.
+
+## Key Features
 
 - **Dynamic Decorator Injection**: Automatically injects decorators into class methods without altering the original method code.
 - **Metaclass Utilization**: Leverages Python's metaclass mechanism to extend class functionalities.
 - **Regular Expression Parsing**: Uses regular expressions to identify and manipulate class definitions within a Python file.
 - **Dynamic Code Execution**: Executes user-provided Python code dynamically within the context of the program.
-- **User-Friendly Interface**: Provides a simple and intuitive interface for the user to interact with the script.
+- **User-Friendly Interface**: Provides a simple and intuitive interface for the user to interact with the script, including predefined presets for easy testing.
 
 ---
 
-## Usage 📖
+## Usage
 
-![Alt text](images/UI_demo.png?raw=true "Program main menu")
+<p align="center">
+    <img src="./images/image.png" width="500"
+    style="border-radius: 10px; border: 1px solid #ddd; padding: 5px;">
+</p>
 
 The script prompts the user to input the name of a Python file and a snippet of Python code. It then modifies the specified file by adding a metaclass to each class, which in turn applies the provided code snippet as a decorator to all methods of these classes.
 
-### Steps 🚶‍♂️
+### Steps
 
 1. Clone the repository.
 2. Run [the script](meta.py) in a Python environment.
 3. Follow the on-screen prompts to specify the target Python file and the code snippet for injection.
 
 ---
-## Example Usage 🌟
+
+## Example Applications
 
 Two examples are included in the repository: [fruit.py](fruit.py) and [bank.py](bank.py). The user can input the name of either file to see the script in action.
 
-1. Automated Debugging and Tracing: You can use this mechanism to automatically add debugging or tracing outputs to each method of your classes, which logs method calls, arguments, and return values. This would be incredibly useful in a development or testing environment where you want to trace the execution flow without cluttering the codebase with log statements.
+1. **Automated Debugging and Tracing:** You can use this mechanism to automatically add debugging or tracing outputs to each method of your classes, which logs method calls, arguments, and return values. This would be incredibly useful in a development or testing environment where you want to trace the execution flow without cluttering the codebase with log statements.
 Example Usage:
 
     ```python
@@ -65,7 +79,7 @@ Example Usage:
     import_meta_class("my_module.py", code_to_add)
     ```
 
-2. Performance Profiling: You can use this mechanism to automatically add performance profiling to each method of your classes, which logs the time taken to execute each method. This would be incredibly useful in a performance optimization scenario where you want to identify bottlenecks in your codebase.
+2. **Performance Profiling:** You can use this mechanism to automatically add performance profiling to each method of your classes, which logs the time taken to execute each method. This would be incredibly useful in a performance optimization scenario where you want to identify bottlenecks in your codebase.
 
     Example Usage:
 
@@ -80,7 +94,7 @@ Example Usage:
     '''
     ```
 
-3. Security and Access Control: You can use this mechanism to automatically add security checks or access control to each method of your classes, which verifies the user's permissions before executing the method. This would be incredibly useful in a security-sensitive application where you want to restrict access to certain methods based on user roles or permissions.
+3. **Security and Access Control:** You can use this mechanism to automatically add security checks or access control to each method of your classes, which verifies the user's permissions before executing the method. This would be incredibly useful in a security-sensitive application where you want to restrict access to certain methods based on user roles or permissions.
 
     Example Usage:
 
@@ -91,7 +105,7 @@ Example Usage:
     '''
     ```
 
-4. Data Validation and Sanitization: You can use this mechanism to automatically add data validation or sanitization to each method of your classes, which ensures that the input data is valid and sanitized before executing the method. This would be incredibly useful in a data-sensitive application where you want to prevent SQL injection or other security vulnerabilities.
+4. **Data Validation and Sanitization:** You can use this mechanism to automatically add data validation or sanitization to each method of your classes, which ensures that the input data is valid and sanitized before executing the method. This would be incredibly useful in a data-sensitive application where you want to prevent SQL injection or other security vulnerabilities.
 
     Example Usage:
 
@@ -106,7 +120,7 @@ Example Usage:
     '''
     ```
 
-5. Dependency Injection: This technique could be used to modify objects at runtime to inject dependencies, for example in a test environment where you might want to inject mock objects instead of real services.
+5. **Dependency Injection:** This technique could be used to modify objects at runtime to inject dependencies, for example in a test environment where you might want to inject mock objects instead of real services.
 
     Example Usage:
 
@@ -117,7 +131,7 @@ Example Usage:
     import_meta_class("database_access_module.py", code_to_add)
     ```
 
-    5. Caching and Memoization: You can use this mechanism to automatically add caching or memoization to each method of your classes, which caches the results of the method to improve performance. This would be incredibly useful in a computationally expensive application where you want to avoid redundant calculations.
+5. **Caching and Memoization:** You can use this mechanism to automatically add caching or memoization to each method of your classes, which caches the results of the method to improve performance. This would be incredibly useful in a computationally expensive application where you want to avoid redundant calculations.
 
     Example Usage:
 
@@ -132,7 +146,7 @@ Example Usage:
     import_meta_class("my_module.py", code_to_add)
     ```
 
-6. Dynamic Feauture Toggling: This approach can facilitate the implementation of feature toggles, allowing you to enable or disable features dynamically without restarting the application or changing the actual business logic code.
+6. **Dynamic Feauture Toggling:** This approach can facilitate the implementation of feature toggles, allowing you to enable or disable features dynamically without restarting the application or changing the actual business logic code.
 
     Example Usage:
 
@@ -145,7 +159,7 @@ Example Usage:
 
     ```
 
-### Output 📝
+### Output
 
 <table>
 <tr>
@@ -153,7 +167,9 @@ Example Usage:
         <div style="margin-right: 20px;">
             <img src="./images/fruit_demo.png" width="500">
         </div>
+        <i>
         <a href="./fruit.py">🍎 fruit.py</a> output befor and after MetaDecorator: <code>print(self.apple_color)</code>
+        </i>
 </div>
     </th>
 </tr>
@@ -188,8 +204,10 @@ A basket of 50 blue apples.
             <div>
                 <img src="./images/bank_demo.png" width="500">
             </div>
+        <i>
         <a href="./bank.py">🏦 bank.py</a> output befor and after MetaDecorator: <code>print(self.amt)</code>
         </th>
+        </i>
     </tr>
 <tr>
 <td>
@@ -212,21 +230,3 @@ Your account, Bob, has 100 dollars.
 </td>
 </tr>
 </table>
-
----
-
-## Application 💡
-
-This project is particularly useful for scenarios requiring dynamic analysis or modification of existing Python code, such as in debugging, profiling, or runtime analysis.
-
-## Disclaimer ⚠️
-
-This script modifies source files and executes code dynamically. It should be used with caution and only with files in a safe and controlled environment.
-
-## Academic Origins and Acknowledgements 🎓
-
-The initial version of this script was developed as part of a university course assignment for _Defensive System-Programming (20937)_ at the Open University of Israel. It earned a perfect score of 100. Since then, the code has been extensively modified and improved to enhance its functionality and applicability.
-
-## License 📜
-
-This project is open-source and available under the [MIT License](LICENSE).

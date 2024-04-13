@@ -4,7 +4,10 @@ class BamkAccount:
         self.amt = amt
 
     def __str__(self):
-        return "Your account, {}, has {} dollars.".format(self.name, self.amt)
+        if self.amt < 0:
+            return "Your account, {}, is overdrawn.".format(self.name)
+        else:
+            return "Your account, {}, has a positive balance.".format(self.name)
 
 
 t1 = BamkAccount("Bob", 100)
