@@ -106,49 +106,33 @@ class GUI:
         Clear the entry widget when it receives focus.
         """
         event.widget.delete(0, tk.END)
-
     def create_widgets(self):
         """
         Create the widgets of the GUI.
         """
-        self.master.attributes('-alpha', 0.9)
-        self.master.configure(bg='black')  # Set the background color to black
+        self.master.configure(bg='white')  # Set the background color to white
 
-        tk.Label(self.master, text="File name:", font=("Courier", 24), fg="green", bg="black").grid(
+        tk.Label(self.master, text="File name:", font=("Courier", 24), fg="black", bg="white").grid(
             row=0, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
-        self.file_entry = tk.Entry(self.master, font=(
-            "Courier", 24), fg="green", bg="black", insertbackground='green', width=20)
+        self.file_entry = tk.Entry(self.master, font=("Courier", 24), fg="black", bg="white", insertbackground='black', width=20)
         self.file_entry.insert(0, "bank.py")  # Insert the default text
-        # Bind the function to the FocusIn event
-        # self.file_entry.bind('<FocusIn>', self.clear_entry)
         self.file_entry.grid(row=0, column=1, sticky=tk.N+tk.S+tk.E+tk.W)
-        self.file_entry_title = tk.Label(self.master, text="Enter code to add or choose from presets:", font=(
-            "Courier", 24), fg="green", bg="black")
+        self.file_entry_title = tk.Label(self.master, text="Enter code to add or choose from presets:", font=("Courier", 24), fg="black", bg="white")
         self.file_entry_title.grid(row=1, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
-        self.code_entry = tk.Text(self.master, font=("Courier", 24), fg="green",
-                                  bg="black", insertbackground='green', width=20, height=3, wrap=tk.WORD)
-        self.code_entry.grid(row=2, column=0, columnspan=6,
-                             sticky=tk.N+tk.S+tk.E+tk.W)
-        # Insert the default text
-        # self.code_entry.insert('1.0', "print('Hello World')")
-        # Get the modes from EXAMPLE_CODE_USAGES
-        self.modes = list(EXAMPLE_CODE_USAGES.keys())
+        self.code_entry = tk.Text(self.master, font=("Courier", 24), fg="black", bg="white", insertbackground='black', width=20, height=3, wrap=tk.WORD)
+        self.code_entry.grid(row=2, column=0, columnspan=6, sticky=tk.N+tk.S+tk.E+tk.W)
+        self.modes = list(EXAMPLE_CODE_USAGES.keys())  # Get the modes from EXAMPLE_CODE_USAGES
         self.mode_var = tk.StringVar()
-        self.mode_combobox = ttk.Combobox(
-            self.master, textvariable=self.mode_var, values=self.modes, font=("Courier", 24))
+        self.mode_combobox = ttk.Combobox(self.master, textvariable=self.mode_var, values=self.modes, font=("Courier", 24))
         self.mode_combobox.current(0)  # Set the default mode to the first one
-        # Bind the function to the combobox
-        self.mode_combobox.bind('<<ComboboxSelected>>', self.on_mode_selected)
+        self.mode_combobox.bind('<<ComboboxSelected>>', self.on_mode_selected)  # Bind the function to the combobox
         self.mode_combobox.grid(row=1, column=1, sticky=tk.N+tk.S+tk.E+tk.W)
-        tk.Button(self.master, text="Run", font=("Courier", 24), fg="green", bg="black",
-                  command=self.run).grid(row=4, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
-        tk.Button(self.master, text="Close", font=("Courier", 24), fg="green", bg="black", command=self.master.quit).grid(
+        tk.Button(self.master, text="Run", font=("Courier", 24), fg="black", bg="white", command=self.run).grid(row=4, column=0, sticky=tk.N+tk.S+tk.E+tk.W)
+        tk.Button(self.master, text="Close", font=("Courier", 24), fg="black", bg="white", command=self.master.quit).grid(
             row=4, column=1, sticky=tk.N+tk.S+tk.E+tk.W
         )
-        self.output_text = tk.Text(self.master, font=(
-            "Courier", 24), fg="green", bg="black", insertbackground='green', width=20, height=3, wrap=tk.WORD)
-        self.output_text.grid(row=5, column=0, columnspan=6,
-                              sticky=tk.N+tk.S+tk.E+tk.W)
+        self.output_text = tk.Text(self.master, font=("Courier", 24), fg="black", bg="white", insertbackground='black', width=20, height=3, wrap=tk.WORD)
+        self.output_text.grid(row=5, column=0, columnspan=6, sticky=tk.N+tk.S+tk.E+tk.W)
         self.file_entry.bind("<Key>", self.adjust_width)
 
     def adjust_width(self, event):
@@ -209,8 +193,3 @@ class GUI:
             # Clear the text entry widget
             self.code_entry.delete('1.0', tk.END)
             self.code_entry.insert('1.0', code)  # Insert the code
-
-
-root = tk.Tk()
-gui = GUI(root)
-root.mainloop()

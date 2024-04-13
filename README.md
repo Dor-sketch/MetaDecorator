@@ -3,7 +3,7 @@
 This Python script dynamically injects decorators into class methods of a given Python file, showcasing metaprogramming, regular expression parsing, and dynamic code execution. The initial version of this script was developed as part of a university course assignment for _Defensive System-Programming (20937)_ at the Open University of Israel. The initial version of this script received a perfect score of `100` from the course. Since then, the code has been extensively modified and improved to enhance its functionality and applicability.
 
 <p align="center">
-    <img src="./images/mat.png" width="500"
+    <img src="./images/output.gif" width="500"
     style="border-radius: 10px; border: 1px solid #ddd; padding: 5px;">
 </p>
 
@@ -19,7 +19,9 @@ This Python script dynamically injects decorators into class methods of a given 
 - [Background](#background)
 - [Key Features](#key-features)
 - [Usage](#usage)
+  - [Steps](#steps)
 - [Example Applications](#example-applications)
+  - [Output](#output)
 
 <!-- /code_chunk_output -->
 
